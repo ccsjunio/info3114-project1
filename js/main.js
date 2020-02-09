@@ -1,3 +1,3 @@
-window.onload(()=>{
-    mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+window.addEventListener("load",()=>{
+    console.log("page loaded");
 });

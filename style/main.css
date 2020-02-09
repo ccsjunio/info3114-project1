@@ -1,0 +1,12 @@
+.bg-dark{
+    background-color:#041e42!important;
+}
+
+.navbar-brand{
+    font-family: Roboto, sans-serif;
+    font-size: +1.5rem;
+}
+
+.navbar-brand img{
+    margin-right:10px;
+}

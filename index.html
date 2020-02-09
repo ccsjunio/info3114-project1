@@ -5,17 +5,70 @@
         <meta charset="UTF8"/>
         <meta name="author" content="Carlos Ferraz"/>
         <meta name="description" content="Project 1 for INFO3114"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- load material design -->
-        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- load bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <!-- include styles -->
+        <link rel="stylesheet" href="./style/main.css"/>
+        <link rel="icon" href="./images/favicon.ico"/>
         
         <!-- include javascript -->
         <script src="./js/main.js"></script>
 
     </head>
     <body>
-        <button class="foo-button mdc-button">Button</button>
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="">
+                  <img src="./images/mlb.svg" width="60" height="60" class="d-inline-block align-middle" alt="">
+                  MLB Scores and Data
+                </a>
+              </nav>
+        </header>
+
+        <main>
+            <div class="card">
+                <div class="card-header">
+                  Get data
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Get game data</h5>
+                  <form class="form-inline">
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Year</label>
+                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                      <option selected>Choose...</option>
+                      <option value="2015">2015</option>
+                      <option value="2016">2016</option>
+                      <option value="2017">2017</option>
+                    </select>
+
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Month</label>
+                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                      <option selected>Choose...</option>
+                      <option value="2015">2015</option>
+                      <option value="2016">2016</option>
+                      <option value="2017">2017</option>
+                    </select>
+
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Day</label>
+                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                      <option selected>Choose...</option>
+                      <option value="2015">2015</option>
+                      <option value="2016">2016</option>
+                      <option value="2017">2017</option>
+                    </select>
+                  
+                    <button type="submit" class="btn btn-primary my-1">Retrieve Data</button>
+                  </form>
+                </div>
+              </div>
+        </main>
+
+          <!-- load material design -->
+          <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </body>
 </html>
