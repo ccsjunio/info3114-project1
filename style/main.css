@@ -1,5 +1,6 @@
 .bg-dark{
     background-color:#041e42!important;
+    color: white;
 }
 
 .navbar-brand{
@@ -9,4 +10,27 @@
 
 .navbar-brand img{
     margin-right:10px;
+}
+
+.card-header{
+    color: #ffffff;
+    background-color: #073472;
+}
+
+.card-body{
+    color: #073472;
+}
+
+.btn-primary{
+    color: #ffffff;
+    background-color: #073472;
+}
+
+.btn-danger{
+    color: #ffffff;
+    background-color: #42043D;
+}
+
+.card.data-retrieved{
+    background-color: #0734720d;
 }

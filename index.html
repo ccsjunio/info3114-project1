@@ -29,41 +29,77 @@
         </header>
 
         <main>
+            <!-- block for retrieving data -->
             <div class="card">
                 <div class="card-header">
                   Get data
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">Get game data</h5>
+                  <h5 class="card-title">Choose the date</h5>
                   <form class="form-inline">
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Year</label>
                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                      <option selected>Choose...</option>
+                      <option selected>Choose the year</option>
                       <option value="2015">2015</option>
                       <option value="2016">2016</option>
                       <option value="2017">2017</option>
                     </select>
 
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Month</label>
-                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                      <option selected>Choose...</option>
-                      <option value="2015">2015</option>
-                      <option value="2016">2016</option>
-                      <option value="2017">2017</option>
+                    <select class="custom-select my-1 mr-sm-2 month-selection" id="inlineFormCustomSelectMonth">
+                      <option selected>Choose the month</option>
                     </select>
 
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Day</label>
-                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                      <option selected>Choose...</option>
-                      <option value="2015">2015</option>
-                      <option value="2016">2016</option>
-                      <option value="2017">2017</option>
+                    <select class="custom-select my-1 mr-sm-2 day-selection" id="inlineFormCustomSelectDay">
+                      <option selected>Choose the day</option>
                     </select>
                   
-                    <button type="submit" class="btn btn-primary my-1">Retrieve Data</button>
+                    <button type="submit" class="btn btn-primary my-1" id="retrieveDataButton">Retrieve Data</button>
                   </form>
                 </div>
-              </div>
+            </div>
+            <!-- end of block for retrieving data -->
+
+            <!-- block for data retrieved -->
+            <div class="card data-retrieved">
+                <div class="card-header">
+                  Data retrieved 
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">name of the team</h5>
+                  
+                  <form>
+                    <div class="form-group">
+                      <label for="">Home Team Name</label>
+                      <input type="text" class="form-control" id="inputHomeTeamName" name="inputHomeTeamName" placeholder="Home Team Name">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Away Team Name</label>
+                      <input type="text" class="form-control" id="inputAwayTeamName" name="inputAwayTeamName" placeholder="Away Team Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Winning Pitcher</label>
+                        <input type="text" class="form-control" id="inputWinningPitcher" name="inputWinningPitcher" placeholder="Winning Pitcher">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Losing Pitcher</label>
+                        <input type="text" class="form-control" id="inputLosingPitcher" name="inputLosingPitcher" placeholder="Losing Pitcher">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Venue</label>
+                        <input type="text" class="form-control" id="inputVenue" name="inputVenue" placeholder="Venue">
+                      </div>
+
+                      <button type="button" class="btn btn-primary my-1" id="buttonPreviousGame">Previous Game</button>
+                      <button type="button" class="btn btn-primary my-1" id="buttonPreviousGame">Next Game</button>
+
+                      <button type="submit" class="btn btn-danger my-1" id="buttonSaveChanges">Save Changes</button>
+                  </form>
+
+                </div>
+            </div>
+            <!-- end of block for data retrieved -->
         </main>
 
           <!-- load material design -->
