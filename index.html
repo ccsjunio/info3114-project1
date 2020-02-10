@@ -36,26 +36,30 @@
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">Choose the date</h5>
-                  <form class="form-inline">
+                  <form class="form-inline" id="retrieval-form">
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Year</label>
-                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                      <option selected>Choose the year</option>
+                    <select class="custom-select my-1 mr-sm-2" id="selectYearToRetrieve">
+                      <option value="" selected>Choose the year</option>
                       <option value="2015">2015</option>
                       <option value="2016">2016</option>
                       <option value="2017">2017</option>
                     </select>
 
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Month</label>
-                    <select class="custom-select my-1 mr-sm-2 month-selection" id="inlineFormCustomSelectMonth">
+                    <select class="custom-select my-1 mr-sm-2 month-selection" id="selectMonthToRetrieve">
                       <option selected>Choose the month</option>
                     </select>
 
                     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Day</label>
-                    <select class="custom-select my-1 mr-sm-2 day-selection" id="inlineFormCustomSelectDay">
+                    <select class="custom-select my-1 mr-sm-2 day-selection" id="selectDayToRetrieve">
                       <option selected>Choose the day</option>
                     </select>
                   
                     <button type="submit" class="btn btn-primary my-1" id="retrieveDataButton">Retrieve Data</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userMessageModal" id="btn-modal-trigger">
+                        Launch demo modal
+                    </button>
                   </form>
                 </div>
             </div>
@@ -69,7 +73,7 @@
                 <div class="card-body">
                   <h5 class="card-title">name of the team</h5>
                   
-                  <form>
+                  <form id="changing-form">
                     <div class="form-group">
                       <label for="">Home Team Name</label>
                       <input type="text" class="form-control" id="inputHomeTeamName" name="inputHomeTeamName" placeholder="Home Team Name">
@@ -92,7 +96,7 @@
                       </div>
 
                       <button type="button" class="btn btn-primary my-1" id="buttonPreviousGame">Previous Game</button>
-                      <button type="button" class="btn btn-primary my-1" id="buttonPreviousGame">Next Game</button>
+                      <button type="button" class="btn btn-primary my-1" id="buttonNextGame">Next Game</button>
 
                       <button type="submit" class="btn btn-danger my-1" id="buttonSaveChanges">Save Changes</button>
                   </form>
@@ -101,6 +105,26 @@
             </div>
             <!-- end of block for data retrieved -->
         </main>
+
+        <!-- Modal for messages to user -->
+        <div class="modal fade" id="userMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
           <!-- load material design -->
           <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

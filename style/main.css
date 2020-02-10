@@ -34,3 +34,7 @@
 .card.data-retrieved{
     background-color: #0734720d;
 }
+
+#btn-modal-trigger{
+    display:none;
+}
