@@ -82,7 +82,6 @@ window.addEventListener("load",()=>{
             //exit without handling the data, because there is data missing
             return false;
         }
-
         let url = "http://gd2.mlb.com/components/game/mlb/year_" + year.value + "/month_" + month.value + "/day_" + day.value + "/master_scoreboard.json";
         let request = new XMLHttpRequest();
         request.onreadystatechange = ()=>{
