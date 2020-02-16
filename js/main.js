@@ -104,8 +104,12 @@ window.addEventListener("load",()=>{
                 let response = JSON.parse(request.responseText);
                 console.log("response=",response);
                 //TODO: treat case when there is one game retrieved not as array
-                //Example: 2016-10-05
-                games = response.data.games.game;
+                //Example: 2016-10-05                
+                if(!Array.isArray(response.data.games.game)){
+                    games.push(response.data.games.game);
+                } else {
+                    games = response.data.games.game;
+                }
                 console.log("games:",games);
                 fillGameData(0);
             }
