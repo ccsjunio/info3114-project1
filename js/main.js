@@ -1,9 +1,26 @@
 const ISFINISHED = 4;
 const ISOK = 200;
-let game = [];
+let games = [];
+let gameIndex = null;
 
 window.addEventListener("load",()=>{
     console.log("page loaded");
+
+    //assign the form element to a variable
+    let retrievalForm = document.querySelector("form#retrieval-form");
+    //assign the next game button to a variable
+    let nextGameButton = document.querySelector("button#buttonNextGame");
+    //assign the previous game button to a variable
+    let previousGameButton = document.querySelector("button#buttonPreviousGame");
+
+    // add a listener for the retrieve data button
+    retrievalForm.addEventListener("submit",handleRetrieveDataRequest);
+
+    //add a listener for the next game button
+    nextGameButton.addEventListener("click",handleNextGameButton);
+
+    //add a listener for the previous game button
+    previousGameButton.addEventListener("click",handlePreviousGameButton);
 
     //fill months
     let monthSelect = document.querySelectorAll("select.month-selection");
@@ -59,9 +76,7 @@ window.addEventListener("load",()=>{
         }
     );//end of day select for each
 
-    // add a listener for the retrieve data button
-    let retrievalForm = document.querySelector("form#retrieval-form");
-    retrievalForm.addEventListener("submit",handleRetrieveDataRequest);
+    
 
     function handleRetrieveDataRequest(event){
         console.log("caught event on handleRetrieveDataRequest - event = ", event);
@@ -88,17 +103,60 @@ window.addEventListener("load",()=>{
             if( request.readyState === ISFINISHED && request.status === ISOK){
                 let response = JSON.parse(request.responseText);
                 console.log("response=",response);
-                let game = response.data.games.game;
-                console.log("game:",game);
-                fillGameData(game[0]);
+                //TODO: treat case when there is one game retrieved not as array
+                //Example: 2016-10-05
+                games = response.data.games.game;
+                console.log("games:",games);
+                fillGameData(0);
             }
         }//end of request.onreadystatechange
 
+        // open get request channel
         request.open("GET",url);
+        // send request
         request.send();
 
+    }//end of function handleRetrieveDataRequest(event)
 
+    /*************************************** 
+    * show the next game in the list
+    * if it is the last game do nothing
+    ****************************************/
+    function handleNextGameButton(event){
+        event.preventDefault();
+        event.stopPropagation();
+        console.log("handleNextGameButton called");
+        //get gameIndex presently being show at the form
+        let gameForm = document.querySelector("form#changing-form");
+        gameIndex = parseInt(gameForm.getAttribute("gameIndex"));
+        // if the game show is the last one exit function - nothing changes in the form
+        if(gameIndex==(games.length-1)){
+            return false;
+        }
+        // if it is not the last of the array
+        // increment gameIndex and show the next game
+        fillGameData(++gameIndex);
     }
+
+    /*************************************** 
+    * show the previous game in the list
+    * if it is the last game do nothing
+    ****************************************/
+   function handlePreviousGameButton(event){
+    event.preventDefault();
+    event.stopPropagation();
+    console.log("handlePreviousGameButton called");
+    //get gameIndex presently being show at the form
+    let gameForm = document.querySelector("form#changing-form");
+    gameIndex = parseInt(gameForm.getAttribute("gameIndex"));
+    // if the game show is the first one exit function - nothing changes in the form
+    if(gameIndex==0){
+        return false;
+    }
+    // if it is not the first of the array
+    // increment gameIndex and show the next game
+    fillGameData(--gameIndex);
+}
 
     function showUserMessageModal(title,message){
         let options = {
@@ -108,13 +166,15 @@ window.addEventListener("load",()=>{
         };
         document.getElementById("modal-title").innerHTML = title;
         document.getElementById("modal-body").innerHTML = message;
-
         document.getElementById("btn-modal-trigger").click();
     
     }
 
-    function fillGameData(game){
-        if(!game) return false;
+    function fillGameData(gameIndex){     
+        console.log("called fillGameData");  
+        if(gameIndex===undefined || gameIndex===null || isNaN(gameIndex)) return false;
+        let game = games[gameIndex];
+        let gameForm = document.querySelector("form#changing-form");
         let homeTeamNameInput = document.getElementById("inputHomeTeamName");
         let awayTeamNameInput = document.getElementById("inputAwayTeamName");
         let winningPitcherInput = document.getElementById("inputWinningPitcher");
@@ -131,6 +191,9 @@ window.addEventListener("load",()=>{
         winningPitcherInput.value = winningPitcher;
         losingPitcherInput.value = losingPitcher;
         venueInput.value = venue;
+
+        //set an attribute for the game index being shown in the form
+        gameForm.setAttribute("gameIndex",gameIndex);
 
     }// end of function fillGameData
 
