@@ -103,13 +103,20 @@ window.addEventListener("load",()=>{
             if( request.readyState === ISFINISHED && request.status === ISOK){
                 let response = JSON.parse(request.responseText);
                 console.log("response=",response);
-                //TODO: treat case when there is one game retrieved not as array
-                //Example: 2016-10-05                
+           
                 if(!Array.isArray(response.data.games.game)){
                     games.push(response.data.games.game);
                 } else {
                     games = response.data.games.game;
                 }
+                //TODO: test with empty array
+                games = [];
+
+                //update quantity of data retrieved
+                let quantityOfGames = games.length;
+                let gameQuantity = document.getElementById("gameQuantity");
+                gameQuantity.innerHTML = quantityOfGames + " game" + (quantityOfGames!=1?"s ":"") + " retrieved";
+
                 console.log("games:",games);
                 fillGameData(0);
             }
@@ -176,7 +183,7 @@ window.addEventListener("load",()=>{
 
     function fillGameData(gameIndex){     
         console.log("called fillGameData");  
-        if(gameIndex===undefined || gameIndex===null || isNaN(gameIndex)) return false;
+        if(gameIndex === undefined || gameIndex === null || isNaN( gameIndex ) || games.length === 0) return false;
         let game = games[gameIndex];
         let gameForm = document.querySelector("form#changing-form");
         let homeTeamNameInput = document.getElementById("inputHomeTeamName");
@@ -184,20 +191,25 @@ window.addEventListener("load",()=>{
         let winningPitcherInput = document.getElementById("inputWinningPitcher");
         let losingPitcherInput = document.getElementById("inputLosingPitcher");
         let venueInput = document.getElementById("inputVenue");
-        let homeTeamName = game ?  game.home_team_name : null;
-        let awayTeamName = game ? game.away_team_name : null;
-        let winningPitcher = game ? (game.winning_pitcher.first + " " + game.winning_pitcher.last) : null;
-        let losingPitcher = game ? (game.losing_pitcher.first + " " + game.losing_pitcher.last) : null;
+        let homeTeamName = game ?  game.home_team_name : "";
+        let awayTeamName = game ? game.away_team_name : "";
+        let winningPitcher = game ? game.winning_pitcher.first + " " + game.winning_pitcher.last : "";
+        let losingPitcher = game ? game.losing_pitcher.first + " " + game.losing_pitcher.last : "";
         let venue = game? game.venue : null;
 
         homeTeamNameInput.value = homeTeamName;
         awayTeamNameInput.value = awayTeamName;
-        winningPitcherInput.value = winningPitcher;
-        losingPitcherInput.value = losingPitcher;
+        winningPitcherInput.value = winningPitcher.trim()=="" ? "not provided" : winningPitcher.trim();
+        losingPitcherInput.value = losingPitcher.trim()=="" ? "not provided" : losingPitcher.trim();
         venueInput.value = venue;
 
         //set an attribute for the game index being shown in the form
         gameForm.setAttribute("gameIndex",gameIndex);
+
+        //update game paging
+        let quantityOfGames = games.length;
+        let gamePaging = document.getElementById("gamePaging");
+        gamePaging.innerHTML = "(" + (+gameIndex + 1) +  " of " + quantityOfGames + " game" + (quantityOfGames>1?"s":"") + " )";
 
     }// end of function fillGameData
 
