@@ -2,6 +2,9 @@ const ISFINISHED = 4;
 const ISOK = 200;
 let games = [];
 let gameIndex = null;
+//define filters types with regular expressions
+const NUMBER_INPUT = /[0-9]+/gm;
+const TEXT_INPUT = /[^a-zA-Z0-9&\s]+/gm;
 
 window.addEventListener("load",()=>{
     console.log("page loaded");
@@ -22,6 +25,21 @@ window.addEventListener("load",()=>{
     //add a listener for the previous game button
     previousGameButton.addEventListener("click",handlePreviousGameButton);
 
+    //add a listener to any text input box
+    let inputs = document.querySelectorAll("input[type='text']");
+    inputs.forEach((input)=>{
+        //input.addEventListener("change",handleInputChange);
+        input.addEventListener("keyup",handleInputChange);
+        //input.addEventListener("keydown",handleInputChange);
+        //input.addEventListener("keypress",handleInputChange);
+    });
+
+    //capture return pressed
+    if (window.event.keyCode === 13) {
+        console.log("pressed enter");
+        window.event.preventDefault();
+    }
+    
     //fill months
     let monthSelect = document.querySelectorAll("select.month-selection");
     console.log("monthSelect=",monthSelect);
@@ -41,13 +59,13 @@ window.addEventListener("load",()=>{
                 let option = document.createElement("option");
                 if(i<10){
                     i = "0" + i;
-                }
+                }// end of if(i<10)
                 option.value = i;
                 option.innerHTML = i;
                 select.appendChild(option);
-            }
-        }
-    );//end of month select for each
+            }// end of for
+        }// (select){}
+    );// end of month select for each
 
     //fill days
     let daySelect = document.querySelectorAll("select.day-selection");
@@ -75,8 +93,6 @@ window.addEventListener("load",()=>{
             }
         }
     );//end of day select for each
-
-    
 
     function handleRetrieveDataRequest(event){
         console.log("caught event on handleRetrieveDataRequest - event = ", event);
@@ -224,6 +240,16 @@ window.addEventListener("load",()=>{
 
     }// end of function fillGameData
 
+    function handleInputChange(event){
+        console.log(event);
+        let inputTarget = event.target;
+        let pattern;
+        if(inputTarget.getAttribute("type")=="text"){
+            pattern = TEXT_INPUT;
+        }
+        inputTarget.value = inputTarget.value.replace(pattern,"");
+    }//function handleInputChange
+
     //TODO: develop a custom modal trigger function
     function Modal(title,message){
         this.title = title;
@@ -232,7 +258,6 @@ window.addEventListener("load",()=>{
         this.windowHeight = window.innerHeight;
         this.width = "326px";
         this.height = "24px";
-
     }
     
 });
