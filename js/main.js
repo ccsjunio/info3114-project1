@@ -109,8 +109,6 @@ window.addEventListener("load",()=>{
                 } else {
                     games = response.data.games.game;
                 }
-                //TODO: test with empty array
-                games = [];
 
                 //update quantity of data retrieved
                 let quantityOfGames = games.length;
