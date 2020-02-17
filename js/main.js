@@ -99,6 +99,7 @@ window.addEventListener("load",()=>{
         }
         let url = "http://gd2.mlb.com/components/game/mlb/year_" + year.value + "/month_" + month.value + "/day_" + day.value + "/master_scoreboard.json";
         let request = new XMLHttpRequest();
+        let retrieveDataButton = document.getElementById("retrieveDataButton");
         request.onreadystatechange = ()=>{
             if( request.readyState === ISFINISHED && request.status === ISOK){
                 let response = JSON.parse(request.responseText);
@@ -116,7 +117,16 @@ window.addEventListener("load",()=>{
                 gameQuantity.innerHTML = quantityOfGames + " game" + (quantityOfGames!=1?"s ":"") + " retrieved";
 
                 console.log("games:",games);
+
+                
+                retrieveDataButton.innerHTML = "Retrieve Data";
+
                 fillGameData(0);
+            } else if ( request.status != 200 ){
+
+
+                retrieveDataButton.innerHTML = "request error: " + request.statusText;
+
             }
         }//end of request.onreadystatechange
 
@@ -124,6 +134,9 @@ window.addEventListener("load",()=>{
         request.open("GET",url);
         // send request
         request.send();
+        // modify retrieve data button and add loading icon
+        retrieveDataButton = document.getElementById("retrieveDataButton");
+        retrieveDataButton.innerHTML = "requesting " +  "<img src='./images/loading.gif' style='width:17px;'/>";
 
     }//end of function handleRetrieveDataRequest(event)
 
