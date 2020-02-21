@@ -39,6 +39,12 @@ window.addEventListener("load",()=>{
         console.log("pressed enter");
         window.event.preventDefault();
     }
+
+    //capture submission event
+    let changingForm = document.querySelector("form#changing-form");
+    changingForm.setAttribute("disabled",true);
+    console.log("changingForm",changingForm);
+    changingForm.addEventListener("submit",handleChangingFormSubmission);
     
     //fill months
     let monthSelect = document.querySelectorAll("select.month-selection");
@@ -113,13 +119,43 @@ window.addEventListener("load",()=>{
             //exit without handling the data, because there is data missing
             return false;
         }
+
         let url = "http://gd2.mlb.com/components/game/mlb/year_" + year.value + "/month_" + month.value + "/day_" + day.value + "/master_scoreboard.json";
         let request = new XMLHttpRequest();
         let retrieveDataButton = document.getElementById("retrieveDataButton");
+        let gameQuantity = document.getElementById("gameQuantity");
+        //add a listerner for ready state change event
         request.onreadystatechange = ()=>{
-            if( request.readyState === ISFINISHED && request.status === ISOK){
+            console.log("onreadstate changed. readyState = " + request.readyState + " status = " + request.status);
+
+            if ( request.readyState === 1 && request.status === ISOK){
+                retrieveDataButton.innerHTML = "channel opened " +  "<img src='./images/loading.gif' style='width:17px;'/>";
+            }
+
+            if ( request.readyState === 2 && request.status === ISOK){
+                retrieveDataButton.innerHTML = "request received " +  "<img src='./images/loading.gif' style='width:17px;'/>";
+            }
+
+            if ( request.readyState === 3 && request.status === ISOK){
+                retrieveDataButton.innerHTML = "loading data " +  "<img src='./images/loading.gif' style='width:17px;'/>";
+            }
+
+            if ( request.readyState === ISFINISHED && request.status === ISOK){
+
                 let response = JSON.parse(request.responseText);
                 console.log("response=",response);
+
+                if( !response.data.games.game || response.data.games.game === undefined ){
+                    
+                    retrieveDataButton.innerHTML = "problem on response";
+                    retrieveDataButton.style.backgroundColor = "#FF0000";
+                    window.setInterval(()=>{
+                        retrieveDataButton.style.backgroundColor = "#073472";
+                        retrieveDataButton.innerHMTL = retrieveDataButton.getAttribute("originalValue");
+                    },2000);
+                    gameQuantity.innerHTML = "no data returned";
+                    return false;
+                }
            
                 if(!Array.isArray(response.data.games.game)){
                     games.push(response.data.games.game);
@@ -129,21 +165,21 @@ window.addEventListener("load",()=>{
 
                 //update quantity of data retrieved
                 let quantityOfGames = games.length;
-                let gameQuantity = document.getElementById("gameQuantity");
+                
                 gameQuantity.innerHTML = quantityOfGames + " game" + (quantityOfGames!=1?"s ":"") + " retrieved";
 
                 console.log("games:",games);
 
-                
                 retrieveDataButton.innerHTML = "Retrieve Data";
 
                 fillGameData(0);
-            } else if ( request.status != 200 ){
 
+            } else if ( request.status != 200 ){
 
                 retrieveDataButton.innerHTML = "request error: " + request.statusText;
 
-            }
+            }//end of if( request.readyState === ISFINISHED && request.status === ISOK)
+
         }//end of request.onreadystatechange
 
         // open get request channel
@@ -151,7 +187,6 @@ window.addEventListener("load",()=>{
         // send request
         request.send();
         // modify retrieve data button and add loading icon
-        retrieveDataButton = document.getElementById("retrieveDataButton");
         retrieveDataButton.innerHTML = "requesting " +  "<img src='./images/loading.gif' style='width:17px;'/>";
 
     }//end of function handleRetrieveDataRequest(event)
@@ -249,6 +284,14 @@ window.addEventListener("load",()=>{
         }
         inputTarget.value = inputTarget.value.replace(pattern,"");
     }//function handleInputChange
+
+    function handleChangingFormSubmission(event){
+        console.log(event);
+        let formTarget = event.target;
+        event.preventDefault();
+        event.stopPropagation();
+
+    }
 
     //TODO: develop a custom modal trigger function
     function Modal(title,message){
