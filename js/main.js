@@ -59,7 +59,7 @@ window.addEventListener("load",()=>{
        
     // remove all options nodes from select for beginning in a clean slate
     while(monthSelect.firstChild){
-        monthSelect.removeChild(select.firstChild);
+        monthSelect.removeChild(monthSelect.firstChild);
     }
 
     // create a DOM element option for the select box
@@ -69,7 +69,7 @@ window.addEventListener("load",()=>{
     option.value = "";
     option.innerHTML = "Choose the month";
     // assign the first element to the list
-    select.appendChild(option);
+    monthSelect.appendChild(option);
     option.removeAttribute("selected");
     // loop to append the other options with the months in the select box
     for(let i=1;i<=12;i++){
@@ -79,25 +79,25 @@ window.addEventListener("load",()=>{
         }// end of if(i<10)
         option.value = i;
         option.innerHTML = i;
-        select.appendChild(option);
+        monthSelect.appendChild(option);
     }// end of for
 
     //fill days
     let daySelect = document.querySelector("select.day-selection");
 
     //remove all options nodes from select for beginning in a clean slate
-    while(select.firstChild){
-        select.removeChild(select.firstChild);
+    while(daySelect.firstChild){
+        daySelect.removeChild(daySelect.firstChild);
     }
     
     // create a DOM element option for the select box
-    let option = document.createElement("option");
+    option = document.createElement("option");
     // assign attributes for the first element in the list
     option.setAttribute("selected","selected");
     option.value = "";
     option.innerHTML = "Choose the day";
     // assign the first element to the list
-    select.appendChild(option);
+    daySelect.appendChild(option);
     option.removeAttribute("selected");
     // loop to append the other options with the months in the select box
     for(let i=1;i<=31;i++){
@@ -107,7 +107,7 @@ window.addEventListener("load",()=>{
         }
         option.value = i;
         option.innerHTML = i;
-        select.appendChild(option);
+        daySelect.appendChild(option);
     } // end of for to fill the day options to select
         
     /* handles the pressing of button to retrieve games */
@@ -178,11 +178,11 @@ window.addEventListener("load",()=>{
                     // to visually acknowledge there was a problem
                     retrieveDataButton.style.backgroundColor = "#FF0000";
                     // after 2 seconds get the contents of the retrieve button to the regular content
-                    window.setInterval(()=>{
+                    window.setTimeout(()=>{
                         retrieveDataButton.style.backgroundColor = "#073472";
                         // the original text is stored at an attribute of the button
                         // this avoids mistakes on contents code located on multiple locations
-                        retrieveDataButton.innerHMTL = retrieveDataButton.getAttribute("originalValue");
+                        retrieveDataButton.textContent = retrieveDataButton.getAttribute("originalValue");
                     },2000);
                     // the game quantity label reflects that no data was returned
                     // it remains util the next request
