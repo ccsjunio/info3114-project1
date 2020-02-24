@@ -373,15 +373,5 @@ window.addEventListener("load",()=>{
         event.stopPropagation();
         return false
     }
-
-    //TODO: develop a custom modal trigger function
-    function Modal(title,message){
-        this.title = title;
-        this.message = message;
-        this.windowWidth = window.innerWidth;
-        this.windowHeight = window.innerHeight;
-        this.width = "326px";
-        this.height = "24px";
-    }
     
 });
